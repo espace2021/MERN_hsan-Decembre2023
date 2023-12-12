@@ -40,23 +40,23 @@ function Cart() {
     <h3 className="product-title">Product</h3>
     <h3 className="price">Price</h3>
     <h3 className="quantity">Quantity</h3>
-    <h3 className="total">Total</h3>
+    <h3 className="total">SubTotal</h3>
     </div>
     <div className="cart-items">
     {cart &&
     cart.map((cartItem) => (
-    <div className="cart-item" key={cartItem.product._id}>
+    <div className="cart-item" key={cartItem._id}>
     <div className="cart-product">
-    <img src={`${cartItem.product.imageart}`} alt={cartItem.product.designation}/>
+    <img src={`${cartItem.imageart}`} alt={cartItem.designation}/>
     <div>
-    <h3>{cartItem.product.designation}</h3>
-    <p>{cartItem.product.reference}</p>
+    <h3>{cartItem.designation}</h3>
+    <p>{cartItem.reference}</p>
     <button onClick={() => handleRemoveFromCart(cartItem)}>
     Remove
     </button>
     </div>
     </div>
-    <div className="cart-product-price"> {cartItem.product.prix} TND</div>
+    <div className="cart-product-price"> {cartItem.prix} TND</div>
     <div className="cart-product-quantity">
     <button onClick={() => handleDecreaseCart(cartItem)}>
     -
@@ -66,7 +66,7 @@ function Cart() {
     
     </div>
     <div className="cart-product-total-price">
-    {(cartItem.product.prix * cartItem.qty)} TND
+    {(cartItem.prix * cartItem.qty)} TND
     </div>
     </div>
     ))}
@@ -77,7 +77,7 @@ function Cart() {
     </button>
     <div className="cart-checkout">
     <div className="subtotal">
-    <span>Subtotal</span>
+    <span>Total</span>
     <span className="amount">{cartTotal}
     TND</span>
     </div>

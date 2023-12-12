@@ -5,6 +5,12 @@ const initialState = {
   cartTotal: 0,
 };
 
+const calculTotal =(Mycart)=>{
+ return Mycart.reduce((accumulator, object) => {
+    return parseFloat(accumulator) + parseFloat(object.prix * object.qty);
+  }, 0);
+}
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -16,50 +22,44 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       const productData = action.payload;
       const productInCartIndex = state.cart.findIndex(
-        (ci) => ci.product._id === productData.product._id
+        (ci) => ci._id === productData._id
       );
 
       if (productInCartIndex < 0) {
         state.cart.push(action.payload);
         state.cartTotal = state.cart.reduce((accumulator, object) => {
-          return parseFloat(accumulator) + parseFloat(object.product.prix * object.qty);
+          return parseFloat(accumulator) + parseFloat(object.prix * object.qty);
         }, 0);
       }
     },
     minusCart: (state, action) => {
       const productData = action.payload;
       const productInCartIndex = state.cart.findIndex(
-        (ci) => ci.product._id === productData.product._id
+        (ci) => ci._id === productData._id
       );
 
       if (productInCartIndex >= 0) {
         state.cart[productInCartIndex].qty--;
       }
 
-      state.cartTotal = state.cart.reduce((accumulator, object) => {
-        return parseFloat(accumulator) + parseFloat(object.product.prix * object.qty);
-      }, 0);
+      state.cartTotal = calculTotal(state.cart)
     },
     removeFromCart: (state, action) => {
-      state.cart = state.cart.filter((obj) => obj.product._id !== action.payload.product._id);
+      state.cart = state.cart.filter((obj) => obj._id !== action.payload._id);
 
-      state.cartTotal = state.cart.reduce((accumulator, object) => {
-        return parseFloat(accumulator) + parseFloat(object.product.prix * object.qty);
-      }, 0);
+      state.cartTotal = calculTotal(state.cart)
     },
     plusCart: (state, action) => {
       const productData = action.payload;
       const productInCartIndex = state.cart.findIndex(
-        (ci) => ci.product._id === productData.product._id
+        (ci) => ci._id === productData._id
       );
 
       if (productInCartIndex >= 0) {
         state.cart[productInCartIndex].qty++;
       }
 
-      state.cartTotal = state.cart.reduce((accumulator, object) => {
-        return parseFloat(accumulator) + parseFloat(object.product.prix * object.qty);
-      }, 0);
+      state.cartTotal = calculTotal(state.cart)
     },
   },
 });

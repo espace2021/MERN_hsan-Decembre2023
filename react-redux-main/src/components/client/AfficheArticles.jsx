@@ -9,16 +9,23 @@ import ReactLoading from 'react-loading';
 
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../features/cartslice";
-import { useNavigate } from "react-router-dom";
+
 
 
 const AfficheArticles = () => {
 
   const dispatch = useDispatch();
-  let navigate=useNavigate();
+ 
   const {articles,isLoading,error} = useSelector((state)=>state.storearticles);
   const handleAddToCart = (art) => {
-    const obj={product:art,qty:1}
+        const obj={
+          _id:art._id,
+          reference : art.reference,
+          designation: art.designation,
+          prix: art.prix,
+          qtestock: art.qtestock,
+          imageart: art.imageart,
+          qty:1}
     dispatch(addToCart(obj));
     
     };
