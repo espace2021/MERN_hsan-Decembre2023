@@ -27,9 +27,7 @@ const cartSlice = createSlice({
 
       if (productInCartIndex < 0) {
         state.cart.push(action.payload);
-        state.cartTotal = state.cart.reduce((accumulator, object) => {
-          return parseFloat(accumulator) + parseFloat(object.prix * object.qty);
-        }, 0);
+        state.cartTotal = calculTotal(state.cart)
       }
     },
     minusCart: (state, action) => {
